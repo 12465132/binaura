@@ -9,16 +9,14 @@ sound = AudioSegment.from_file("Living a Lie.mp3")
 l_channel,r_channel = sound.split_to_mono()
 n_fft = 2**6
 hop_length = 2**4
-l_stft = librosa.stft(np.frombuffer(l_channel._data, dtype=np.int16).astype(np.float32),n_fft=n_fft,hop_length=hop_length)
-r_stft = librosa.stft(np.frombuffer(r_channel._data, dtype=np.int16).astype(np.float32),n_fft=n_fft,hop_length=hop_length)
-l_fd = librosa.istft(stft_matrix=l_stft,                                           
-            n_fft=1024,hop_length=512,win_length=None,window='hann',center=True)
-l_fd = librosa.istft(stft_matrix=l_stft,
-            n_fft=1024,hop_length=512,win_length=None,window='hann',center=True)
-l_channel_new  = AudioSegment(np.array(l_fd, dtype=np.int16).tobytes(),
-                              n_fft=1024,hop_length=512,win_length=None,window='hann',center=True)
-r_channel_new  = AudioSegment(np.array(l_fd, dtype=np.int16).tobytes(),
-                              n_fft=1024,hop_length=512,win_length=None,window='hann',center=True)
+l_stft = librosa.stft(np.frombuffer(l_channel._data, dtype=np.int16).astype(np.float32),
+                                          n_fft=1024,hop_length=512,win_length=None,window='hann',center=True)
+r_stft = librosa.stft(np.frombuffer(r_channel._data, dtype=np.int16).astype(np.float32),
+                                          n_fft=1024,hop_length=512,win_length=None,window='hann',center=True)
+l_fd =   librosa.istft(stft_matrix=l_stft,n_fft=1024,hop_length=512,win_length=None,window='hann',center=True)
+l_fd =   librosa.istft(stft_matrix=l_stft,n_fft=1024,hop_length=512,win_length=None,window='hann',center=True)
+l_channel_new  = AudioSegment(np.array(l_fd, dtype=np.int16).tobytes(), frame_rate = sound.frame_rate, sample_width=2, channels = 1)
+r_channel_new  = AudioSegment(np.array(l_fd, dtype=np.int16).tobytes(), frame_rate = sound.frame_rate, sample_width=2, channels = 1)
 sound_new = AudioSegment.from_mono_audiosegments(l_channel_new, r_channel_new)
 sound_new.export("Living a Lie.wav")
 print(l_stft.shape)
