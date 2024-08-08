@@ -27,7 +27,7 @@ separator = Separator(output_dir="AiAudio")
 separator.load_model(model_filename='UVR-MDX-NET-Inst_HQ_3.onnx')
 # Perform the separation on specific audio files without reloading the model
 cleanup_condition1 = input("should completed SPLIT files be moved out of AiAudio to Instrumental and Vocals directory?(y/n) ")
-cleanup_condition2 = input(  "should original RAW files be moved out of raw to completed_raw directory?(y/n) ")
+cleanup_condition2 = input(  "should original RAW files be moved out of raw to completed/raw directory?(y/n) ")
 for posable_file in os.listdir("raw/"):
     file_stem = posable_file.rsplit(".", maxsplit=1)[0]
     aiaudiofile = file_stem+"_(Instrumental)_UVR-MDX-NET-Inst_HQ_3.wav"
@@ -40,5 +40,5 @@ for posable_file in os.listdir("raw/"):
         os.rename("AiAudio/"+file_stem+"_(Instrumental)_UVR-MDX-NET-Inst_HQ_3.wav","Instrumental/"+file_stem+"_(Instrumental).wav")
         os.rename("AiAudio/"+file_stem+      "_(Vocals)_UVR-MDX-NET-Inst_HQ_3.wav",      "Vocals/"+file_stem+      "_(Vocals).wav")
     if cleanup_condition2 == "y":
-        os.rename("raw/"+posable_file,"completed_raw/"+posable_file)
+        os.rename("raw/"+posable_file,"completed/raw/"+posable_file)
 print("Separation complete!")
