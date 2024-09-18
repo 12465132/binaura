@@ -45,8 +45,8 @@ for posable_file in os.listdir("Instrumental/"):
         stereo_sound_shifted = AudioSegment.from_mono_audiosegments(left_channel, right_channel)
         stereo_sound_Instrumental = AudioSegment.from_file(file_instrumental)
         stereo_sound_Vocals = AudioSegment.from_file(file_vocal)
-        stereo_sound_shifted.overlay(stereo_sound_Instrumental)
-        stereo_sound_shifted.overlay(stereo_sound_Vocals)
+        stereo_sound_shifted = stereo_sound_shifted.overlay(stereo_sound_Instrumental)
+        stereo_sound_shifted = stereo_sound_shifted.overlay(stereo_sound_Vocals)
         stereo_sound_shifted.export("final/"+file_stem + "_" + half_steps +".wav")
         print("file : " + "final/" + file_stem + half_steps +".wav" + " completed")
         if cleanup_condition1 == "y":
